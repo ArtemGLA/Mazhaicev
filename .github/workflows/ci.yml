@@ -61,7 +61,7 @@ jobs:
           name: built-program
           path: ./usr/bin
       
-      - run: chmod +x ./hello
+      - run: chmod +x ./usr/bin/hello
       
       - name: Compile and run tests
         run: |
