@@ -1,0 +1,31 @@
+#!/bin/bash
+
+SRC_DIR="/src"
+
+cd $SRC_DIR
+echo "Current directory: $(pwd)"
+
+make all
+
+# Проверяем создался ли файл
+if [ -f "$SRC_DIR/hello" ]; then
+    echo "✓ Compilation successful!"
+    
+    # Устанавливаем бинарник
+    echo "Installing to /usr/bin"
+    cp -v "$SRC_DIR/hello" /usr/bin
+    
+    # Проверяем установку
+    if [ -f "/usr/bin/hello" ]; then
+        echo "✓ Binary installed successfully!"      
+    else
+        echo "Error: Failed to copy binary to /usr/local/bin/hello"
+        exit 1
+    fi
+else
+    echo "Error: Compilation failed - 'hello' binary not created!"
+    exit 1
+fi
+
+exit 0
+
