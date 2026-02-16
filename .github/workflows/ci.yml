@@ -65,8 +65,7 @@ jobs:
       
       - name: Compile and run tests
         run: |
-          g++ -o test_runner test.cpp
-          ./test_runner
+          make -C ./cicd
 
   package:
     name: 📦 Сборка .deb пакета
