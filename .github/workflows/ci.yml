@@ -30,7 +30,7 @@ jobs:
           echo "Сборка бинарного файла"
           make
           
-      - name: Build program
+      - name: Check binary
         working-directory: ./usr/bin
         run: |
           if [ -f hello ]; then
@@ -48,29 +48,29 @@ jobs:
           name: built-program
           path: usr/bin/hello
           retention-days: 7
-test:
-  needs: build
-  runs-on: ubuntu-latest
-  
-  steps:
-    - uses: actions/checkout@v4
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
     
-    - uses: actions/download-artifact@v4
-      with:
-        name: built-program
-        path: ./
-    
-    - run: chmod +x ./hello
-    
-    - name: Compile and run tests
-      run: |
-        g++ -o test_runner test.cpp
-        ./test_runner
-          
-          
-  package:  # ← НОВАЯ JOB
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/download-artifact@v4
+        with:
+          name: built-program
+          path: ./
+      
+      - run: chmod +x ./hello
+      
+      - name: Compile and run tests
+        run: |
+          g++ -o test_runner test.cpp
+          ./test_runner
+
+  package:
     name: 📦 Сборка .deb пакета
-    needs: build  # ← зависит от build
+    needs: test
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     
@@ -81,19 +81,16 @@ test:
       - name: Download binary artifact
         uses: actions/download-artifact@v4
         with:
-          name: built-program  # ← должно совпадать с именем из build
+          name: built-program
           path: ./downloaded-binary
       
       - name: Build .deb package
         run: |
-          # Копируем существующую DEBIAN и бинарник
           mkdir -p ./temp_package
           cp -r ./DEBIAN ./temp_package/
           mkdir -p ./temp_package/usr/bin
           cp ./downloaded-binary/hello ./temp_package/usr/bin/
           chmod +x ./temp_package/usr/bin/hello
-          
-          # Сборка
           dpkg-deb --build ./temp_package
           mv ./temp_package.deb myapp-${GITHUB_SHA::7}.deb
       
