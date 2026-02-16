@@ -17,42 +17,34 @@ jobs:
       - name: Install build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y \
-            build-essential \
-            g++ \
-            make \
+          sudo apt-get install -y build-essential g++ make
       
       - name: Check compiler version
         run: |
           g++ --version
           make --version
-          echo "✅ Компилятор и make установлены"
       
-      - name: Build program with make
+      - name: Build program
         working-directory: ./src
         run: |
-          echo "🔨 Начинаем сборку программы..."
+          echo "Сборка бинарного файла"
           make
-        
-      - name: Check compiler version
+          
+      - name: Build program
         working-directory: ./usr/bin
         run: |
           if [ -f hello ]; then
-            echo "✅ Сборка успешна! Исполняемый файл создан"
+            echo "Бинарник создан: ./usr/bin"
+            file hello
           else
-            echo "❌ Ошибка: исполняемый файл не найден!"
+            echo "Бинарник не найден!"
+            ls -la
             exit 1
           fi
-      
-      - name: List build artifacts
-        working-directory: ./src
-        run: |
-          echo "Содержимое папки src после сборки:"
-          ls -la
       
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: built-program
-          path: src/myprogram
+          path: usr/bin/hello
           retention-days: 7
