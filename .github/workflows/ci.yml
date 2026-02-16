@@ -48,6 +48,24 @@ jobs:
           name: built-program
           path: usr/bin/hello
           retention-days: 7
+test:
+  needs: build
+  runs-on: ubuntu-latest
+  
+  steps:
+    - uses: actions/checkout@v4
+    
+    - uses: actions/download-artifact@v4
+      with:
+        name: built-program
+        path: ./
+    
+    - run: chmod +x ./hello
+    
+    - name: Compile and run tests
+      run: |
+        g++ -o test_runner test.cpp
+        ./test_runner
           
           
   package:  # ← НОВАЯ JOB
