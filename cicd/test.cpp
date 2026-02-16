@@ -52,7 +52,7 @@ int main() {
     
     // ТЕСТ 1: Простой тест с маленькими числами
     {
-        ofstream input("test1_input.txt");
+        ofstream input("/home/runner/work/TestGitHub/TestGitHub/usr/bin/hello");
         input << "1\n2\n3\n4\n5\n"  // Матрица 5x5 (первые 25 чисел)
               << "6\n7\n8\n9\n10\n"
               << "11\n12\n13\n14\n15\n"

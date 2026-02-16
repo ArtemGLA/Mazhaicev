@@ -59,7 +59,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: built-program
-          path: ./
+          path: ./usr/bin
       
       - run: chmod +x ./hello
       
