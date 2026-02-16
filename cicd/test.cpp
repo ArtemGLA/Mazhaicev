@@ -10,8 +10,8 @@ using namespace std;
 bool runTest(const string& testName, const string& inputFile, const string& outputFile) {
     cout << "\n=== Запуск теста: " << testName << " ===\n";
     
-    // Формируем команду для запуска вашей программы
-    string command = "./hello < " + inputFile + " > " + outputFile;
+    // ✅ ПРАВИЛЬНЫЙ ПУТЬ к hello в usr/bin
+    string command = "../usr/bin/hello < " + inputFile + " > " + outputFile;
     
     // Запускаем программу
     int result = system(command.c_str());
@@ -20,7 +20,7 @@ bool runTest(const string& testName, const string& inputFile, const string& outp
         cout << "Программа выполнилась успешно\n";
         return true;
     } else {
-        cout << "Ошибка выполнения программы\n";
+        cout << "Ошибка выполнения программы. Команда: " << command << "\n";
         return false;
     }
 }
@@ -48,23 +48,26 @@ bool checkOutput(const string& outputFile, const string& expectedText) {
 int main() {
     cout << "=== ТЕСТИРОВАНИЕ ПРОГРАММЫ МАТРИЦЫ ===\n";
     
+    // Отладка - посмотрим где мы и что доступно
+    cout << "Текущая директория: ";
+    system("pwd");
+    cout << "Проверяем наличие hello: ";
+    system("ls -la ../usr/bin/ || echo 'hello не найден!'");
+    
     int passed = 0;
     
-    // ТЕСТ 1: Простой тест с маленькими числами
+    // ТЕСТ 1: Простой тест
     {
-        ofstream input("/home/runner/work/TestGitHub/TestGitHub/usr/bin/hello");
-        input << "1\n2\n3\n4\n5\n"  // Матрица 5x5 (первые 25 чисел)
-              << "6\n7\n8\n9\n10\n"
-              << "11\n12\n13\n14\n15\n"
-              << "16\n17\n18\n19\n20\n"
-              << "21\n22\n23\n24\n25\n"
-              << "1\n2\n3\n4\n5\n6\n"  // Матрица 6x6 (первые 36 чисел)
-              << "7\n8\n9\n10\n11\n12\n"
-              << "13\n14\n15\n16\n17\n18\n"
-              << "19\n20\n21\n22\n23\n24\n"
-              << "25\n26\n27\n28\n29\n30\n"
-              << "31\n32\n33\n34\n35\n36\n";
+        // ✅ Создаем test1_input.txt в текущей папке (./cicd/)
+        ofstream input("test1_input.txt");
+        input << "1 2 3 4 5\n"
+              << "6 7 8 9 10\n"
+              << "11 12 13 14 15\n"
+              << "16 17 18 19 20\n"
+              << "21 22 23 24 25\n";
         input.close();
+        
+        cout << "✅ Создан файл: test1_input.txt\n";
         
         if (runTest("Простой ввод", "test1_input.txt", "test1_output.txt")) {
             if (checkOutput("test1_output.txt", "Программа завершена")) {
@@ -75,10 +78,12 @@ int main() {
             }
         }
     }
+    
     if (passed == 1) {
-        cout << "Тест пройден\n";
+        cout << "✅ Тест пройден\n";
+        return 0;
     } else {
-        cout << "Тест не пройден\n";
+        cout << "❌ Тест не пройден\n";
+        return 1;
     }
-    return 0;
 }
