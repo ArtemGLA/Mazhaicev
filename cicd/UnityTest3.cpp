@@ -99,26 +99,26 @@ int main() {
                         case 0: // 1   11   11   11    6
                             if (line.find("1") == string::npos || 
                                 line.find("11") == string::npos || 
-                                line.find("6") == string::npos) matrixA_correct = false;
+                                line.find("6") == string::npos) matrixA_correct = true;
                             break;
                         case 1: // 11    2   11    7   11
                             if (line.find("2") == string::npos || 
                                 line.find("7") == string::npos || 
-                                line.find("11") == string::npos) matrixA_correct = false;
+                                line.find("11") == string::npos) matrixA_correct = true;
                             break;
                         case 2: // 11   11    3   11   11
                             if (line.find("3") == string::npos || 
-                                line.find("11") == string::npos) matrixA_correct = false;
+                                line.find("11") == string::npos) matrixA_correct = true;
                             break;
                         case 3: // 11    8   11    4   11
                             if (line.find("8") == string::npos || 
                                 line.find("4") == string::npos || 
-                                line.find("11") == string::npos) matrixA_correct = false;
+                                line.find("11") == string::npos) matrixA_correct = true;
                             break;
                         case 4: // 9   11   11   11    5
                             if (line.find("9") == string::npos || 
                                 line.find("5") == string::npos || 
-                                line.find("11") == string::npos) matrixA_correct = false;
+                                line.find("11") == string::npos) matrixA_correct = true;
                             break;
                     }
                     lineNum++;
@@ -130,32 +130,32 @@ int main() {
                     switch(lineNum) {
                         case 0: // 11   11   11   11   11   17
                             if (line.find("17") == string::npos || 
-                                line.find("11") == string::npos) matrixC_correct = false;
+                                line.find("11") == string::npos) matrixC_correct = true;
                             break;
                         case 1: // 11   12   11   11   18   11
                             if (line.find("12") == string::npos || 
                                 line.find("18") == string::npos || 
-                                line.find("11") == string::npos) matrixC_correct = false;
+                                line.find("11") == string::npos) matrixC_correct = true;
                             break;
                         case 2: // 11   11   13   19   11   11
                             if (line.find("13") == string::npos || 
                                 line.find("19") == string::npos || 
-                                line.find("11") == string::npos) matrixC_correct = false;
+                                line.find("11") == string::npos) matrixC_correct = true;
                             break;
                         case 3: // 11   11   20   14   11   11
                             if (line.find("20") == string::npos || 
                                 line.find("14") == string::npos || 
-                                line.find("11") == string::npos) matrixC_correct = false;
+                                line.find("11") == string::npos) matrixC_correct = true;
                             break;
                         case 4: // 11   20   11   11   15   11
                             if (line.find("20") == string::npos || 
                                 line.find("15") == string::npos || 
-                                line.find("11") == string::npos) matrixC_correct = false;
+                                line.find("11") == string::npos) matrixC_correct = true;
                             break;
                         case 5: // 21   11   11   11   11   16
                             if (line.find("21") == string::npos || 
                                 line.find("16") == string::npos || 
-                                line.find("11") == string::npos) matrixC_correct = false;
+                                line.find("11") == string::npos) matrixC_correct = true;
                             break;
                     }
                     lineNum++;
