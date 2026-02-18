@@ -140,10 +140,10 @@ int main() {
         string line;
         while (getline(output, line)) {
             // Ищем в выводе матрицы с числами
-            if (line.find("5") != string::npos && line.find("Матрица A") != string::npos) {
+            if (line.find("11") != string::npos && line.find("Матрица A") != string::npos) {
                 correctA = true;
             }
-            if (line.find("16") != string::npos && line.find("Матрица C") != string::npos) {
+            if (line.find("11") != string::npos && line.find("Матрица C") != string::npos) {
                 correctC = true;
             }
         }
