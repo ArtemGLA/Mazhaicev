@@ -9,4 +9,5 @@ clean:
 install:
 	mkdir -p ../usr/bin
 	cp hello ../usr/bin
+	chmod +x ../usr/bin/hello
 	
