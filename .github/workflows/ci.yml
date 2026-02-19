@@ -47,7 +47,7 @@ jobs:
       
       - name: Compile and run tests
         run: |
-          make ./cicd
+          make -C ./cicd
 
   RunPackage:
     needs: RunTest
