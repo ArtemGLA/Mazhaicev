@@ -29,7 +29,7 @@ jobs:
         with:
           name: built-program
           path: usr/bin/hello
-          retention-days: 7
+          retention-days: 1
 
   RunTest:
     needs: RunMake
@@ -47,7 +47,7 @@ jobs:
       
       - name: Compile and run tests
         run: |
-          make -C ./cicd
+          make ./cicd
 
   RunPackage:
     needs: RunTest
@@ -65,17 +65,11 @@ jobs:
       
       - name: Build .deb package
         run: |
-          mkdir -p ./temp_package
-          cp -r ./DEBIAN ./temp_package/
-          mkdir -p ./temp_package/usr/bin
-          cp ./downloaded-binary/hello ./temp_package/usr/bin/
-          chmod +x ./temp_package/usr/bin/hello
-          dpkg-deb --build ./temp_package
-          mv ./temp_package.deb myapp-${GITHUB_SHA::7}.deb
+          dpkg-deb --build . ItalianCode.deb
       
       - name: Upload .deb artifact
         uses: actions/upload-artifact@v4
         with:
           name: deb-package
-          path: "*.deb"
-          retention-days: 30
+          path: "ItalianCode.deb"
+          retention-days: 1
