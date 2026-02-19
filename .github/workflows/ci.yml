@@ -2,13 +2,13 @@ name: CI Pipeline - Build Stage
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  RunMake:
+    runs-on: ubuntu-22.04
     
     steps:
       - name: Checkout code
@@ -19,28 +19,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y build-essential g++ make
       
-      - name: Check compiler version
-        run: |
-          g++ --version
-          make --version
-      
       - name: Build program
         working-directory: ./src
         run: |
-          echo "Сборка бинарного файла"
-          make
-          
-      - name: Check binary
-        working-directory: ./usr/bin
-        run: |
-          if [ -f hello ]; then
-            echo "Бинарник создан: ./usr/bin"
-            file hello
-          else
-            echo "Бинарник не найден!"
-            ls -la
-            exit 1
-          fi
+          makeubuntu-22.04
       
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -49,9 +31,9 @@ jobs:
           path: usr/bin/hello
           retention-days: 7
 
-  test:
-    needs: build
-    runs-on: ubuntu-latest
+  RunTest:
+    needs: RunMake
+    runs-on: ubuntu-22.04
     
     steps:
       - uses: actions/checkout@v4
@@ -67,11 +49,9 @@ jobs:
         run: |
           make -C ./cicd
 
-  package:
-    name: 📦 Сборка .deb пакета
-    needs: test
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  RunPackage:
+    needs: RunTest
+    runs-on: ubuntu-22.04
     
     steps:
       - name: Checkout code
