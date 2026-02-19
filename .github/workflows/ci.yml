@@ -23,7 +23,8 @@ jobs:
         working-directory: ./src
         run: |
           make bin
-          make install  # Создает директорию ../usr/bin и копирует туда файл
+          make install
+          chmod +x ../usr/bin/hello
       
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
