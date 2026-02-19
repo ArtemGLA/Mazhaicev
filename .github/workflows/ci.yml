@@ -22,7 +22,7 @@ jobs:
       - name: Build program
         working-directory: ./src
         run: |
-          makeubuntu-22.04
+          make
       
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
